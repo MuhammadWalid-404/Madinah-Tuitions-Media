@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agreement</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>Agreement Between Guardian and Tutor</h1>
+    <button onclick="window.location.href='index.html'">Go Back</button>
+  </header>
+
+  <div class="agreement-container">
+    <p>By signing below, both parties agree to the terms and conditions of the tuition offer.</p>
+
+    <label for="guardianSignature">Guardian Signature:</label>
+    <input type="text" id="guardianSignature" placeholder="Guardian's Name" />
+
+    <label for="tutorSignature">Tutor Signature:</label>
+    <input type="text" id="tutorSignature" placeholder="Tutor's Name" />
+
+    <button onclick="submitAgreement()">Sign Agreement</button>
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

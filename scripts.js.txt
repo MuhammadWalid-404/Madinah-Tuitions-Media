@@ -1,0 +1,122 @@
+// Save an offer posted by Guardian
+function submitOffer() {
+  const subject = document.getElementById('subject').value;
+  const salary = parseFloat(document.getElementById('salary').value);
+  const location = document.getElementById('location').value;
+  const level = document.getElementById('level').value;
+
+  if (subject && salary && location) {
+    const offer = { subject, salary, location, level };
+
+    let offers = JSON.parse(localStorage.getItem('tuitionOffers')) || [];
+    offers.push(offer);
+    localStorage.setItem('tuitionOffers', JSON.stringify(offers));
+
+    alert("Your tuition offer has been posted!");
+    window.location.href = 'guardian-dashboard.html';
+  } else {
+    alert('Please fill in all the fields.');
+  }
+}
+
+// Display Guardian and Tutor offers in the Admin Panel
+function displayAdminPanel() {
+  const guardianOffers = JSON.parse(localStorage.getItem('tuitionOffers')) || [];
+  const tutorSavedOffers = JSON.parse(localStorage.getItem('savedOffers')) || [];
+
+  const guardianOffersContainer = document.getElementById('guardianOffers');
+  const tutorOffersContainer = document.getElementById('tutorOffers');
+
+  // Display Guardian Offers
+  if (guardianOffers.length === 0) {
+    guardianOffersContainer.innerHTML = '<p>No tuition offers posted by guardians.</p>';
+  } else {
+    guardianOffers.forEach(offer => {
+      const offerDiv = document.createElement('div');
+      offerDiv.innerHTML = `<p>Subject: ${offer.subject}, Salary: ${offer.salary}, Location: ${offer.location}, Level: ${offer.level}</p>`;
+      guardianOffersContainer.appendChild(offerDiv);
+    });
+  }
+
+  // Display Tutor Saved Offers
+  if (tutorSavedOffers.length === 0) {
+    tutorOffersContainer.innerHTML = '<p>No tuition offers saved by tutors.</p>';
+  } else {
+    tutorSavedOffers.forEach(offer => {
+      const offerDiv = document.createElement('div');
+      offerDiv.innerHTML = `<p>Subject: ${offer.subject}, Location: ${offer.location}, Level: ${offer.level}</p>`;
+      tutorOffersContainer.appendChild(offerDiv);
+    });
+  }
+}
+
+// Search and display available tuition offers for tutors
+function searchOffers() {
+  const subject = document.getElementById('searchSubject').value;
+  const location = document.getElementById('searchLocation').value;
+  const level = document.getElementById('searchLevel').value;
+
+  const offers = JSON.parse(localStorage.getItem('tuitionOffers')) || [];
+
+  const filteredOffers = offers.filter(offer => {
+    return (
+      (subject ? offer.subject.toLowerCase().includes(subject.toLowerCase()) : true) &&
+      (location ? offer.location.toLowerCase().includes(location.toLowerCase()) : true) &&
+      (level ? offer.level.toLowerCase() === level.toLowerCase() : true)
+    );
+  });
+
+  const offerListContainer = document.getElementById('offerList');
+  offerListContainer.innerHTML = '';
+
+  if (filteredOffers.length === 0) {
+    offerListContainer.innerHTML = '<p>No matching offers found.</p>';
+  } else {
+    filteredOffers.forEach(offer => {
+      const offerDiv = document.createElement('div');
+      offerDiv.innerHTML = `<p>Subject: ${offer.subject}, Salary: ${offer.salary}, Location: ${offer.location}, Level: ${offer.level}</p>`;
+      offerListContainer.appendChild(offerDiv);
+    });
+  }
+}
+
+// Display saved offers in Tutor Dashboard
+function displaySavedOffers() {
+  const savedOffers = JSON.parse(localStorage.getItem('savedOffers')) || [];
+  const savedOffersContainer = document.getElementById('savedOffers');
+
+  if (savedOffers.length === 0) {
+    savedOffersContainer.innerHTML = '<p>No offers saved yet.</p>';
+  } else {
+    savedOffers.forEach(offer => {
+      const offerDiv = document.createElement('div');
+      offerDiv.innerHTML = `<p>Subject: ${offer.subject}, Location: ${offer.location}, Level: ${offer.level}</p>`;
+      savedOffersContainer.appendChild(offerDiv);
+    });
+  }
+}
+
+// Digital Agreement Submission
+function submitAgreement() {
+  const guardianSignature = document.getElementById('guardianSignature').value;
+  const tutorSignature = document.getElementById('tutorSignature').value;
+
+  if (guardianSignature && tutorSignature) {
+    alert('Agreement signed successfully!');
+    window.location.href = 'index.html';
+  } else {
+    alert('Both signatures are required!');
+  }
+}
+
+window.onload = function() {
+  // Load the saved offers on Tutor Dashboard
+  if (document.getElementById('savedOffers')) {
+    displaySavedOffers();
+  }
+
+  // Display the Guardian and Tutor offers in Admin Panel
+  if (document.getElementById('guardianOffers')) {
+    displayAdminPanel();
+  }
+};

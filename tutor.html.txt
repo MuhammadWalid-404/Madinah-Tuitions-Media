@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Tuition Offers - Tutor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>Search Tuition Offers</h1>
+    <button onclick="window.location.href='index.html'">Go Back</button>
+  </header>
+
+  <div class="form-container">
+    <label for="searchSubject">Subject:</label>
+    <input type="text" id="searchSubject" placeholder="e.g. Math" />
+    <label for="searchLocation">Location:</label>
+    <input type="text" id="searchLocation" placeholder="e.g. Dhaka" />
+    <label for="searchLevel">Level:</label>
+    <select id="searchLevel">
+      <option value="">Any</option>
+      <option value="Primary">Primary</option>
+      <option value="Secondary">Secondary</option>
+      <option value="University">University</option>
+    </select>
+    <button onclick="searchOffers()">Search</button>
+  </div>
+
+  <div id="offerList"></div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
